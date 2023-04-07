@@ -2,6 +2,9 @@ import random
 
 # print(random.uniform(.6,.8))
 
+alien_ships = ['Borg', 'Xxynzz', 'Bane', 'Taladune', 'f9-3000', 'Emperor Zillafar']
+choice = "No"
+
 class Player():
     def __init__(self, name):
         self.name = name
@@ -12,14 +15,13 @@ class Player():
     def attacked(self, damage, success):
         if success: 
             self.hull -= damage
-            print("Alien hit you!")
+            print(f"{alien_ships[new_alien.ship_no-1]} hit you!")
         else: 
-            print("Alien missed you!")
+            print(f"{alien_ships[new_alien.ship_no-1]} missed you!")
     
     def accuracy_check(self):
         rand_num = random.uniform(0,1)
         if self.accuracy > rand_num:
-            print('hello')
             return True
         else: 
             return False
@@ -44,22 +46,35 @@ class Alien():
     def accuracy_check(self):
         rand_num = random.uniform(0,1)
         if self.accuracy > rand_num:
-            print('hello')
             return True
         else: 
             return False
 
-player1 = Player('USS Assembly')
+name = input("Enter the name of your vessel: ")
+
+player1 = Player(name)
 print(f"Greetings, {player1.name}!\nAre you ready for battle?\nAre you ready for war?\n")
 
-while player1.hull > 0 and Alien.ship_no < 6:
+while player1.hull > 0 and Alien.ship_no < 6 and choice != "Yes":
     new_alien = Alien()
-    print(f"Alien #{new_alien.ship_no} approaches")
+    print(f"\n\n\nAlien Ship #{new_alien.ship_no},  {alien_ships[new_alien.ship_no-1]} approaches\n\n\n -----------------------------------")
     while new_alien.hull > 0 and player1.hull > 0: 
-        print(f"Your Hull: {player1.hull}")
-        print(f"Alien Hull: {new_alien.hull}")
-        print(f"You're the first to attack!")
+        print(f"{player1.name}'s Hull: {round(player1.hull, 2)} | Alien Hull: {round(new_alien.hull,2)}")
+
+        print(f"You're the first to attack!\n")
         new_alien.attacked(player1.firepower, player1.accuracy_check())
-        print(f"Your Hull: {player1.hull}")
-        print(f"Alien Hull: {new_alien.hull}")
+        print(f"\n-----------------------------------\nYour Hull: {round(player1.hull,2)}")
+        print(f"{alien_ships[new_alien.ship_no-1]}'s Hull: {round(new_alien.hull,2)}")
+        print(f"Brace Yourselves!")
         player1.attacked(new_alien.firepower, new_alien.accuracy_check())
+        
+    choice =  input("Give up on humanity? Yes or No ")
+    
+
+
+if choice == "Yes":
+    print("Humanity is most dissappointed, coward...")
+elif player1.hull > 0:
+    print(f"\nYou win!! and with {player1.name} having {round(player1.hull,2)} life to spare")
+else:
+    print(f"\nYou died! Humanity is doomed")
