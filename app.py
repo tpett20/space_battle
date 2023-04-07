@@ -1,8 +1,6 @@
 import random
 
-# print(random.uniform(.6,.8))
-
-alien_ships = ['Borg', 'Xxynzz', 'Bane', 'Taladune', 'f9-3000', 'Emperor Zillafar']
+alien_ships = ['Borg', 'Xxynzz', 'Bane', 'Taladune', 'F9-3000', 'Emperor Zillafar']
 choice = "No"
 
 class Player():
@@ -55,7 +53,7 @@ name = input("Enter the name of your vessel: ")
 player1 = Player(name)
 print(f"Greetings, {player1.name}!\nAre you ready for battle?\nAre you ready for war?\n")
 
-while player1.hull > 0 and Alien.ship_no < 6 and choice != "Yes":
+while player1.hull > 0 and Alien.ship_no < 6 and choice != "yes":
     new_alien = Alien()
     print(f"\n\n\nAlien Ship #{new_alien.ship_no},  {alien_ships[new_alien.ship_no-1]} approaches\n\n\n -----------------------------------")
     while new_alien.hull > 0 and player1.hull > 0: 
@@ -67,12 +65,13 @@ while player1.hull > 0 and Alien.ship_no < 6 and choice != "Yes":
         print(f"{alien_ships[new_alien.ship_no-1]}'s Hull: {round(new_alien.hull,2)}")
         print(f"Brace Yourselves!")
         player1.attacked(new_alien.firepower, new_alien.accuracy_check())
-        
-    choice =  input("Give up on humanity? Yes or No ")
+        if new_alien.hull < 0:
+            print(f"You've defeated {alien_ships[new_alien.ship_no-1]}! Good work, Captain!\n")  
+    choice =  input("Give up on humanity? Yes or No: ").lower()
     
 
 
-if choice == "Yes":
+if choice == "yes":
     print("Humanity is most dissappointed, coward...")
 elif player1.hull > 0:
     print(f"\nYou win!! and with {player1.name} having {round(player1.hull,2)} life to spare")
